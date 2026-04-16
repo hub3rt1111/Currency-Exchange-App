@@ -1,6 +1,8 @@
 package com.example.currencyexchange.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,20 +28,31 @@ import com.example.currencyexchange.ui.model.MyCurrency
 
 @Composable
 fun CurrencyItem(currency: MyCurrency, modifier: Modifier = Modifier) {
-
     Row(
         modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .background(Color.White)
+            .drawBehind {
+                val width = 2.dp.toPx()
+                drawLine(
+                    color = Color.Gray,
+                    start = Offset(0f, size.height),
+                    end = Offset(size.width, size.height),
+                    strokeWidth = width
+                )
+            }
+            .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = painterResource(id = getFlag(currency.countryCode)),
                 contentDescription = "flag",
-                modifier = modifier
-                    .size(36.dp)
+                modifier = Modifier
+                    .size(42.dp)
                     .padding(end = 8.dp)
             )
             Column() {
@@ -60,7 +77,7 @@ fun CurrencyItem(currency: MyCurrency, modifier: Modifier = Modifier) {
                 Image(
                     painter = painterResource(id = arrow),
                     contentDescription = "arrow",
-                    modifier = modifier.size(36.dp)
+                    modifier = Modifier.size(36.dp)
                 )
             }
             Text(
