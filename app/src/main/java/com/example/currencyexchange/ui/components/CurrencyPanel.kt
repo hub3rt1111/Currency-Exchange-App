@@ -2,7 +2,6 @@ package com.example.currencyexchange.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,24 +13,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.currencyexchange.R
+import com.example.currencyexchange.ui.data.CurrencyProvider
 import com.example.currencyexchange.ui.model.MyCurrency
+import com.example.currencyexchange.ui.theme.LightGray
 
 
 @Composable
-fun CurrencyItem(currency: MyCurrency, modifier: Modifier = Modifier) {
+fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
     Row(
         modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(LightGray)
             .drawBehind {
                 val width = 2.dp.toPx()
                 drawLine(
@@ -48,13 +49,14 @@ fun CurrencyItem(currency: MyCurrency, modifier: Modifier = Modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = getFlag(currency.countryCode)),
-                contentDescription = "flag",
+            AsyncImage(
+                model = currency.flagUrl,
+                contentDescription = "Flag",
                 modifier = Modifier
-                    .size(42.dp)
+                    .size(56.dp)
                     .padding(end = 8.dp)
             )
+
             Column() {
                 Text(
                     currency.countryCode,
