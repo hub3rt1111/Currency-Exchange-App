@@ -1,8 +1,8 @@
-package com.example.currencyexchange.ui.model
+package com.example.currencyexchange.model
 
 import com.google.gson.annotations.SerializedName
 
-data class CurrencyApi(
+data class CurrencyApiResponse(
 
     @SerializedName("result")
     val result: String,
@@ -11,6 +11,6 @@ data class CurrencyApi(
     val baseCode: String,
 
     @SerializedName("conversion_rates")
-    val conversionRates: Map<Int, String>
+    val conversionRates: Map<String, Double>
 
 )

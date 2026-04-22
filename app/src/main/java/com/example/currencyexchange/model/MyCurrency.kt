@@ -1,6 +1,4 @@
-package com.example.currencyexchange.ui.model
-
-import com.example.currencyexchange.ui.data.CurrencyProvider
+package com.example.currencyexchange.model
 
 
 data class MyCurrency(

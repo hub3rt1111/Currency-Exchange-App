@@ -1,4 +1,4 @@
-package com.example.currencyexchange.ui.data
+package com.example.currencyexchange.model
 
 data class CurrencyInfo(
     val code: String,        // np. "PLN"
@@ -164,7 +164,7 @@ object CurrencyProvider {
     )
 
     fun getFlagUrl(currencyCode: String, width: Int = 640): String? {
-        val countryCode = CurrencyProvider.currencies[currencyCode]?.countryCode ?: return null
+        val countryCode = currencies[currencyCode]?.countryCode ?: return null
         return "https://flagcdn.com/w$width/$countryCode.png"
     }
 }

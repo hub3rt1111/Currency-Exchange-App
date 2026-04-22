@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -22,8 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.currencyexchange.R
-import com.example.currencyexchange.ui.data.CurrencyProvider
-import com.example.currencyexchange.ui.model.MyCurrency
+import com.example.currencyexchange.model.MyCurrency
 import com.example.currencyexchange.ui.theme.LightGray
 
 
@@ -56,10 +54,9 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
                     .size(56.dp)
                     .padding(end = 8.dp)
             )
-
             Column() {
                 Text(
-                    currency.countryCode,
+                    currency.currencyCode,
                     fontWeight = FontWeight.Bold,
                     fontStyle = FontStyle.Italic
                 )
@@ -89,13 +86,3 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
     }
 }
 
-fun getFlag(countryCode: String): Int {
-    return when (countryCode) {
-        "USD" -> R.drawable.us
-        "GBP" -> R.drawable.uk
-        "EUR" -> R.drawable.round
-        "CHF" -> R.drawable.switzerland
-        "PLN" -> R.drawable.poland
-        else -> R.drawable.poland
-    }
-}
