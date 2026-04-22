@@ -9,4 +9,5 @@ data class MyCurrency(
 
     val name: String = CurrencyProvider.currencies[currencyCode]?.name ?: ""
     val flagUrl: String = CurrencyProvider.getFlagUrl(currencyCode) ?: ""
+    val conversionRates: Map<String, Double> = emptyMap()
 }

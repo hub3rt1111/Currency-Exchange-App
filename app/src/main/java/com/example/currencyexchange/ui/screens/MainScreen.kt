@@ -1,17 +1,22 @@
 package com.example.currencyexchange.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -31,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.example.currencyexchange.ui.components.CurrencyPanel
 import com.example.currencyexchange.model.MyCurrency
 import com.example.currencyexchange.ui.theme.DarkRed
+import com.example.currencyexchange.ui.theme.DarkerLightGray
 import com.example.currencyexchange.ui.theme.LightRed
 
 @Preview
@@ -61,11 +67,20 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
     val eur = MyCurrency("EUR", 1.02, -0.11)
     val chf = MyCurrency("CHF", 2.21, 2.22)
     val pln = MyCurrency("PLN", 0.11, 3.09)
+    val pln2 = MyCurrency("PLN", 0.11, 3.09)
+    val pln3 = MyCurrency("PLN", 0.11, 3.09)
+    val pln4 = MyCurrency("PLN", 0.11, 3.09)
+    val pln5 = MyCurrency("PLN", 0.11, 3.09)
+    val pln6 = MyCurrency("PLN", 0.11, 3.09)
+
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier
             .fillMaxSize()
+            .background(DarkerLightGray)
     ) {
+
         Column(
             modifier = Modifier.padding(16.dp),
         ) {
@@ -85,11 +100,16 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
             )
         }
 
-        Column() {
+        Column(modifier = Modifier.verticalScroll(scrollState)) {
             CurrencyPanel(usd)
             CurrencyPanel(gbp)
             CurrencyPanel(eur)
             CurrencyPanel(chf)
+            CurrencyPanel(pln)
+            CurrencyPanel(pln)
+            CurrencyPanel(pln)
+            CurrencyPanel(pln)
+            CurrencyPanel(pln)
             CurrencyPanel(pln)
         }
 
@@ -110,8 +130,8 @@ fun BottomBar(
             label = { Text("Home") }
         )
         NavigationBarItem(
-            selected = selectedIndex == 2,
-            onClick = { onItemSelected(2) },
+            selected = selectedIndex == 1,
+            onClick = { onItemSelected(1) },
             icon = { Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite") },
             label = { Text("Favorite") }
         )

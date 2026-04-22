@@ -1,20 +1,28 @@
 package com.example.currencyexchange.ui.components
 
+import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,7 +38,7 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
     Row(
         modifier
             .fillMaxWidth()
-            .background(LightGray)
+            .background(color = Color.White)
             .drawBehind {
                 val width = 2.dp.toPx()
                 drawLine(
@@ -45,15 +53,18 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             AsyncImage(
                 model = currency.flagUrl,
                 contentDescription = "Flag",
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
-                    .size(56.dp)
-                    .padding(end = 8.dp)
+                    .size(52.dp)
+                    .shadow(10.dp, RoundedCornerShape(32.dp))
+                    .clip(RoundedCornerShape(32.dp))
             )
+            Spacer(modifier = Modifier.width(8.dp))
             Column() {
                 Text(
                     currency.currencyCode,
