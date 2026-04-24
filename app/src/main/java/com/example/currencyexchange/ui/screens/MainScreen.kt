@@ -33,6 +33,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.example.currencyexchange.ui.components.CurrencyPanel
 import com.example.currencyexchange.model.MyCurrency
 import com.example.currencyexchange.ui.theme.DarkRed
@@ -47,31 +52,36 @@ fun MainScreen(modifier: Modifier = Modifier) {
         mutableIntStateOf(0)
     }
 
+    val navController = rememberNavController()
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomBar(selectedIndex = selectedIndex, onItemSelected = { selectedIndex = it })
+            BottomBar(selectedIndex = selectedIndex, navController)
         }
     )
     { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable("home") { HomeScreen() }
+            composable("fav") { FavoriteScreen() }
+            composable("settings") { SettingsScreen() }
+        }
     }
 
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
+fun HomeScreen(modifier: Modifier = Modifier) {
 
     val usd = MyCurrency("USD", 4.32, -1.12)
     val gbp = MyCurrency("GBP", 3.13, 0.52)
     val eur = MyCurrency("EUR", 1.02, -0.11)
     val chf = MyCurrency("CHF", 2.21, 2.22)
     val pln = MyCurrency("PLN", 0.11, 3.09)
-    val pln2 = MyCurrency("PLN", 0.11, 3.09)
-    val pln3 = MyCurrency("PLN", 0.11, 3.09)
-    val pln4 = MyCurrency("PLN", 0.11, 3.09)
-    val pln5 = MyCurrency("PLN", 0.11, 3.09)
-    val pln6 = MyCurrency("PLN", 0.11, 3.09)
 
     val scrollState = rememberScrollState()
 
@@ -119,25 +129,31 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
 @Composable
 fun BottomBar(
     selectedIndex: Int,
-    onItemSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    navController: NavController,
 ) {
+    val currentRoute =
+        navController
+            .currentBackStackEntryAsState() // obserwuje aktualny ekran (auto refresh UI)
+            .value                          // bierze aktualny stan
+            ?.destination                   // aktualny ekran (destination)
+            ?.route                         // jego nazwa np. "home", "fav", "settings"
+
     NavigationBar {
         NavigationBarItem(
-            selected = selectedIndex == 0,
-            onClick = { onItemSelected(0) },
+            selected = currentRoute == "home",
+            onClick = { navController.navigate("home") },
             icon = { Icon(imageVector = Icons.Default.Home, contentDescription = "Home") },
             label = { Text("Home") }
         )
         NavigationBarItem(
-            selected = selectedIndex == 1,
-            onClick = { onItemSelected(1) },
+            selected = currentRoute == "fav",
+            onClick = { navController.navigate("fav") },
             icon = { Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite") },
             label = { Text("Favorite") }
         )
         NavigationBarItem(
-            selected = selectedIndex == 3,
-            onClick = { onItemSelected(3) },
+            selected = currentRoute == "settings",
+            onClick = { navController.navigate("settings") },
             icon = { Icon(imageVector = Icons.Default.Settings, contentDescription = "Settings") },
             label = { Text("Settings") }
         )

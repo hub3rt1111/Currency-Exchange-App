@@ -1,5 +1,6 @@
 package com.example.currencyexchange.ui.components
 
+import android.icu.number.Precision.currency
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,12 +27,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.currencyexchange.R
 import com.example.currencyexchange.model.MyCurrency
 import com.example.currencyexchange.ui.theme.LightGray
-
 
 @Composable
 fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
@@ -75,25 +76,34 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
             }
         }
 
-        Column() {
-            Row() {
-                Text(
-                    "${currency.value} PLN",
-                    fontWeight = FontWeight.Bold
-                )
-
-                val arrow = if (currency.change < 0) R.drawable.arrowdown else R.drawable.arrowup
-
-                Image(
-                    painter = painterResource(id = arrow),
-                    contentDescription = "arrow",
-                    modifier = Modifier.size(36.dp)
-                )
-            }
-            Text(
-                "${currency.change} %"
-            )
-        }
+        ChangeInformation(currency)
     }
 }
 
+@Composable
+fun ChangeInformation(currency: MyCurrency) {
+    Column() {
+        Row() {
+            Text(
+                "${currency.value} PLN",
+                fontWeight = FontWeight.Bold
+            )
+
+            val arrow = if (currency.change < 0) R.drawable.arrowdown else R.drawable.arrowup
+
+            Image(
+                painter = painterResource(id = arrow),
+                contentDescription = "arrow",
+                modifier = Modifier.size(36.dp)
+            )
+        }
+        Text(
+            "${currency.change} %"
+        )
+    }
+}
+
+@Composable
+fun FavoriteInformation(modifier: Modifier = Modifier) {
+
+}

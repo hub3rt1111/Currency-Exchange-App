@@ -56,8 +56,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:retrofit:3.0.0") // retrofit
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
 
     implementation("io.coil-kt:coil-compose:2.5.0") // AsyncImage
+
+    implementation("androidx.navigation:navigation-compose:2.9.8") // nav
 }
