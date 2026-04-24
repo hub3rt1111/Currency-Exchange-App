@@ -1,5 +1,6 @@
 package com.example.currencyexchange.ui.components
 
+import android.annotation.SuppressLint
 import android.icu.number.Precision.currency
 import android.widget.Space
 import androidx.compose.foundation.Image
@@ -13,6 +14,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +40,12 @@ import com.example.currencyexchange.model.MyCurrency
 import com.example.currencyexchange.ui.theme.LightGray
 
 @Composable
-fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
+fun CurrencyPanel(
+    modifier: Modifier = Modifier,
+    currency: MyCurrency,
+    infoType: Int = 0,
+    isFavorite: Boolean
+) {
     Row(
         modifier
             .fillMaxWidth()
@@ -76,7 +86,9 @@ fun CurrencyPanel(currency: MyCurrency, modifier: Modifier = Modifier) {
             }
         }
 
-        ChangeInformation(currency)
+        if (infoType == 0) ChangeInformation(currency)
+        else FavoriteInformation(isFavorite = isFavorite)
+
     }
 }
 
@@ -85,7 +97,7 @@ fun ChangeInformation(currency: MyCurrency) {
     Column() {
         Row() {
             Text(
-                "${currency.value} PLN",
+                "${"%.2f".format(currency.value)} PLN",
                 fontWeight = FontWeight.Bold
             )
 
@@ -104,6 +116,9 @@ fun ChangeInformation(currency: MyCurrency) {
 }
 
 @Composable
-fun FavoriteInformation(modifier: Modifier = Modifier) {
-
+fun FavoriteInformation(isFavorite: Boolean) {
+    Column(modifier = Modifier.padding(end = 8.dp)) {
+        if (isFavorite) Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorite")
+        else Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "Favorite")
+    }
 }
